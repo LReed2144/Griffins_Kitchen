@@ -13,6 +13,12 @@ def index(request):
 def home_page(request):
     return render(request, "griffinskitchen/home_page.html")
 
+def all_recipes(request):
+    return render(request, "griffinskitchen/all_recipes.html")
+
+def follow(request):
+    return render(request, "griffinskitchen/follow.html")
+
 
 def login_view(request):
     if request.method == "POST":
