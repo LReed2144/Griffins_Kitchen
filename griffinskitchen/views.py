@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
@@ -24,11 +24,33 @@ def follow(request):
     return render(request, "griffinskitchen/follow.html")
 
 
-@login_required
+
 def settings(request):
     # currently getting the object 'user' from class Profile
     user_profile=Profile.objects.get(user=request.user)
-    return render(request,'griffinskitchen/settings.html',{'user_profile':user_profile})
+        
+    if request.method == 'POST':
+        
+        if request.FILES.get('image') == None:
+            image = user_profile.profile_img
+            about = request.POST['about']
+           
+
+            user_profile.profile_img = image
+            user_profile.about = about
+            user_profile.save()
+        if request.FILES.get('image') != None:
+            image = request.FILES.get('image')
+            about = request.POST['about']
+          
+
+            user_profile.profile_img = image
+            user_profile.about = about
+            user_profile.save()
+        
+        return redirect('settings')
+
+    return render(request, 'griffinskitchen/settings.html', {'user_profile': user_profile})
    
 
 def login_view(request):
