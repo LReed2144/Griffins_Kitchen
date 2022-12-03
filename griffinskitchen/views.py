@@ -3,10 +3,12 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+
 
 from .models import *
 
-from django.contrib.auth.decorators import login_required
+
 
 
 def index(request):
@@ -24,8 +26,10 @@ def follow(request):
 
 @login_required
 def settings(request):
-    return render(request, "griffinskitchen/settings.html")
-
+    # currently getting the object 'user' from class Profile
+    user_profile=Profile.objects.get(user=request.user)
+    return render(request,'griffinskitchen/settings.html',{'user_profile':user_profile})
+   
 
 def login_view(request):
     if request.method == "POST":
@@ -53,6 +57,14 @@ def logout_view(request):
 
 
 def register(request):
+
+
+
+#                 #create a Profile object for the new user
+#                
+
+
+
     if request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]
@@ -69,12 +81,17 @@ def register(request):
         try:
             user = User.objects.create_user(username, email, password)
             user.save()
+            #create a Profile object for the new user
+            user_model = User.objects.get(username=username)
+            new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
+            new_profile.save()
+
             # Profile(user=user).save()
         except IntegrityError:
             return render(request, "griffinskitchen/register.html", {
                 "message": "Username already taken."
             })
         login(request, user)
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("home_page"))
     else:
         return render(request, "griffinskitchen/register.html")

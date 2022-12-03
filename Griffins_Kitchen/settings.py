@@ -83,7 +83,8 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'griffinskitchen.User'
+# AUTH_USER_MODEL = 'griffinskitchen.User'
+# AUTH_PROFILE_MODULE = 'griffinskitchen.Profile'
 
 
 # Password validation
