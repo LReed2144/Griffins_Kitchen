@@ -4,7 +4,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User
+from .models import *
+
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -18,6 +20,11 @@ def all_recipes(request):
 
 def follow(request):
     return render(request, "griffinskitchen/follow.html")
+
+
+@login_required
+def settings(request):
+    return render(request, "griffinskitchen/settings.html")
 
 
 def login_view(request):
