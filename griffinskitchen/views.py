@@ -48,9 +48,9 @@ def settings(request):
             user_profile.about = about
             user_profile.save()
         
-        return redirect('settings')
+        return redirect('settings/')
 
-    return render(request, 'griffinskitchen/settings.html', {'user_profile': user_profile})
+    return render(request, 'griffinskitchen/settings.html/', {'user_profile': user_profile})
    
 
 def login_view(request):

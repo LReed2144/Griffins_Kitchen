@@ -21,8 +21,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("griffinskitchen.urls"))
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # setting up anything dealing with media importing from settings.py
-urlpatterns = urlpatterns+static(settings.MEDIA_URL,
-document_root=settings.MEDIA_ROOT)
+# urlpatterns = urlpatterns+static(settings.MEDIA_URL,
+# document_root=settings.MEDIA_ROOT)
