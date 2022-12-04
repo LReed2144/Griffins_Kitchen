@@ -4,24 +4,44 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User, auth
 
 
-from .models import *
+from .models import Profile, Post, User 
 
 
 
 
 def index(request):
-    return render(request, "griffinskitchen/index.html")
+    user_object = User.objects.get(username=request.user.username)
+    user_profile = Profile.objects.get(user=user_object)
+    return render(request, "griffinskitchen/index.html", {'user_profile':user_profile})
+ 
+
 
 def home_page(request):
     return render(request, "griffinskitchen/home_page.html")
+
 
 def all_recipes(request):
     return render(request, "griffinskitchen/all_recipes.html")
 
 def follow(request):
     return render(request, "griffinskitchen/follow.html")
+
+
+def upload(request):
+
+    if request.method == 'POST':
+        user = request.user.username
+        image = request.FILES.get('image_upload')
+        description = request.POST['description']
+        ingredients = request.POST['ingredients']
+        instructions = request.POST['instructions']
+
+        new_post = Post.objects.create(user=user, image=image, description=description, ingredients=ingredients, instructions=instructions)
+        new_post.save()
+        return HttpResponseRedirect(reverse(all_recipes))
 
 
 
@@ -48,9 +68,9 @@ def settings(request):
             user_profile.about = about
             user_profile.save()
         
-        return redirect('settings/')
+        return redirect('settings')
 
-    return render(request, 'griffinskitchen/settings.html/', {'user_profile': user_profile})
+    return render(request, 'griffinskitchen/settings.html', {'user_profile': user_profile})
    
 
 def login_view(request):
@@ -79,13 +99,6 @@ def logout_view(request):
 
 
 def register(request):
-
-
-
-#                 #create a Profile object for the new user
-#                
-
-
 
     if request.method == "POST":
         username = request.POST["username"]

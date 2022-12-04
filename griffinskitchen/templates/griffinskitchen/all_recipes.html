@@ -3,4 +3,30 @@
 
 {% block body %}
 <h1>welcome to the all recipes posts!</h1>
+
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+<a href="{% url 'home_page' %}">
+    <div class="col-span-2">
+        <label for=""> Profile Image</label>
+        <img width="100" height="100" src="{{user_profile.profile_img.url}}" />
+    </div>
+</a>
+</form>
+<form action="" method="POST" enctype="multipart/form-data" >
+    {% csrf_token %}
+    <p> Post Here
+    </p>
+
+    <div>
+        <input type="file" name="image_upload">
+        
+        <textarea  name="desciption" placeholder="Description..." ></textarea>
+        <textarea  name="ingredients" placeholder="Ingredients..." ></textarea>
+        <textarea  name="instructions" placeholder="Instructions..." ></textarea>
+        <br>
+        <button class="button bg-blue-700" type="submit" >Post</button>
+    </div>
+</form>
+
 {% endblock %}
