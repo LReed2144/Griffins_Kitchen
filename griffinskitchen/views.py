@@ -13,23 +13,30 @@ from .models import Profile, Post, User
 
 
 def index(request):
-    user_object = User.objects.get(username=request.user.username)
-    user_profile = Profile.objects.get(user=user_object)
-    return render(request, "griffinskitchen/index.html", {'user_profile':user_profile})
+    return render(request, "griffinskitchen/index.html")
  
 
-
+@login_required
 def home_page(request):
     return render(request, "griffinskitchen/home_page.html")
 
-
+@login_required
 def all_recipes(request):
-    return render(request, "griffinskitchen/all_recipes.html")
+    #get object of current login user
+    user_object = User.objects.get(username=request.user.username)
+    #get their profile
+    user_profile = Profile.objects.get(user=user_object)
+
+    posts=Post.objects.all()
+
+    return render(request, "griffinskitchen/all_recipes.html",{'user_profile':user_profile, 'posts':posts})
+
+   
 
 def follow(request):
     return render(request, "griffinskitchen/follow.html")
 
-
+@login_required
 def upload(request):
 
     if request.method == 'POST':
@@ -41,7 +48,9 @@ def upload(request):
 
         new_post = Post.objects.create(user=user, image=image, description=description, ingredients=ingredients, instructions=instructions)
         new_post.save()
-        return HttpResponseRedirect(reverse(all_recipes))
+        return redirect('all_recipes')
+    else:
+        return redirect('all_recipes')
 
 
 
