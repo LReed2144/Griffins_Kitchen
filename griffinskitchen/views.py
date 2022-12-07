@@ -53,7 +53,10 @@ def upload(request):
         return redirect('all_recipes')
 
 
+def likes(request):
+    return render(request, "griffinskitche/all_recipes.html", "griffinskitchen/follow.html")
 
+@login_required
 def settings(request):
     # currently getting the object 'user' from class Profile
     user_profile=Profile.objects.get(user=request.user)
