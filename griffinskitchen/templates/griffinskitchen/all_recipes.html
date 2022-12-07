@@ -68,14 +68,20 @@
 <br>
 <div>
     <a href="/like_post?post_id={{post.id}}">
-        <div>
-            <button class="button button-like">
-                <i class="fa fa-heart"></i>
-                <span>Like</span>
-            </button>
-            <p>Liked by 1 person</p>
-        </div>
+        <button class="button button-like">
+            <i class="fa fa-heart"></i>
+            <span>Like</span>
+        </button>
     </a>
+        <div>
+            {% if post.likes == 0 %}
+            <p></p>
+            {% elif post.likes == 1 %}
+            <p>Liked by {{post.likes}} person</p>
+            {% else %}
+            <p>Liked by {{post.likes}} people</p>
+            {% endif %}
+        </div>          
 </div>
   <br>
   <br>
