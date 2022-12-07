@@ -73,6 +73,10 @@ def like_post(request):
         post.save()
         return redirect('all_recipes')
 
+@login_required
+def profile(request, pk):
+    return render(request, 'home_page.html')
+
 
 @login_required
 def settings(request):
