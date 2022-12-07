@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, auth
 
 
-from .models import Profile, Post, User 
+from .models import Profile, Post, User, LikePost
 
 
 
@@ -52,9 +52,27 @@ def upload(request):
     else:
         return redirect('all_recipes')
 
+@login_required
+def like_post(request):
+    username = request.user.username
+    post_id = request.GET.get('post_id')
 
-def likes(request):
-    return render(request, "griffinskitche/all_recipes.html", "griffinskitchen/follow.html")
+    post = Post.objects.get(id=post_id)
+
+    like_filter = LikePost.objects.filter(post_id=post_id, username=username).first()
+
+    if like_filter == None:
+        new_like = LikePost.objects.create(post_id=post_id, username=username)
+        new_like.save()
+        post.likes = post.likes+1
+        post.save()
+        return redirect('all_recipes')
+    else:
+        like_filter.delete()
+        post.likes = post.likes-1
+        post.save()
+        return redirect('all_recipes')
+
 
 @login_required
 def settings(request):

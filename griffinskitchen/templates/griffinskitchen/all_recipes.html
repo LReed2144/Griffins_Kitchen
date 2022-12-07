@@ -1,6 +1,24 @@
 {% extends "griffinskitchen/layout.html" %}
 {% load static %}
 
+
+<!-- <script>
+
+    $(document).foundation();
+    
+    $(function() {
+      $('.button-like')
+        .bind('click', function(event) {
+          $(".button-like").toggleClass("liked");
+        })
+    });
+    
+    
+</script> -->
+{% block script %}
+    <script src="{% static 'griffinskitchen/index.js' %}"></script>
+{% endblock %}
+
 {% block body %}
 <h1>welcome to the all recipes posts!</h1>
 
@@ -46,5 +64,44 @@
 <p>
     <strong>Instructions</strong> {{post.instructions}}
 </p>
+
+<br>
+<div>
+    <a href="/like_post?post_id={{post.id}}">
+        <div>
+            <button class="button button-like">
+                <i class="fa fa-heart"></i>
+                <span>Like</span>
+            </button>
+            <p>Liked by 1 person</p>
+        </div>
+    </a>
+</div>
+  <br>
+  <br>
+  <hr>
+
  {% endfor %}
+
+
 {% endblock %}
+
+
+
+<h1>test</h1>
+<!-- 
+<div class="flex space-x-4 lg:font-bold">
+    <a href="/like-post?post_id={{post.id}}" class="flex items-center space-x-2">
+        <div class="p-2 rounded-full text-black">
+            <i class="fa fa-heart"></i>
+            {% if post.no_of_likes == 0 %}
+            <p>No likes</p>
+            {% elif post.no_of_likes == 1 %}
+            <p>Liked by {{post.no_of_likes}} person</p>
+            {% else %}
+            <p>Liked by {{post.no_of_likes}} people</p>
+            {% endif %}
+        </div>
+        
+    </a>
+</div> -->
