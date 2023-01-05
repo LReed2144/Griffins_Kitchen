@@ -1,18 +1,20 @@
 from django.urls import path
 from . import views 
+# from . views import AddCommentView
 
 urlpatterns = [
     path("", views.index, name="index"),
     path("settings/", views.settings, name="settings"),
-    path("upload", views.upload, name="upload"),
+    path("all_recipes/upload", views.upload, name="upload"),
     path("login/", views.login_view, name="login"),
     path("logout/", views.logout_view, name="logout"),
     path("register/", views.register, name="register"),
     path("home_page/", views.home_page, name="home_page"),  # mysite.com
-    path("all-recipes", views.all_recipes, name="all_recipes"),
+    path("all_recipes/", views.all_recipes, name="all_recipes"),
     path("follow", views.follow, name="follow"),
     path("like_post", views.like_post, name="like_post"),
     path('profile/<str:pk>', views.profile, name='profile'),
-    path('favorites', views.favorites, name='favorites'),
     path('search', views.search, name="search")
+    # path('post_delete/<post_id>', views.post_delete, name="post_delete")
+    # path('all_recipes/comment', AddCommentView.as_view(), name="add_comment")
 ]

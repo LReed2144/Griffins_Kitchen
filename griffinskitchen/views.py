@@ -7,8 +7,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, auth
 from itertools import chain
 import random
+from django.views.generic.edit import CreateView
 
-from .models import Profile, Post, User, LikePost, FollowersCount
+from .models import Profile, Post, User, LikePost, FollowersCount, Comments
 
 
 
@@ -22,11 +23,12 @@ def home_page(request):
     return render(request, "griffinskitchen/home_page.html")
 
 @login_required
-def all_recipes(request):
+def all_recipes(request,):
     #get object of current login user
     user_object = User.objects.get(username=request.user.username)
     #get their profile
     user_profile = Profile.objects.get(user=user_object)
+   
 
     posts=Post.objects.all()
 
@@ -68,10 +70,7 @@ def all_recipes(request):
 
     return render(request, "griffinskitchen/all_recipes.html", {'user_profile':user_profile, 'posts':posts, 'suggestions_username_profile_list': suggestions_username_profile_list[:4]})
 
-   
 
-def favorites(request):
-    return render(request, "griffinskitchen/favorites.html")
 
 @login_required
 def upload(request):

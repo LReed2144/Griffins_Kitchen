@@ -13,20 +13,6 @@ class Profile(models.Model):
     about = models.TextField(blank=True)
 
 
-    # Relationships
-    # OneToOne: 
-    # ManyToOne: ForeignKey
-    # ManyToMany
-
-    # Reverse Relatinoships
-    # user_posts = Post.objects.get(user=user)
-    # posts = user.posts.all()
-
-    # followers = models.ManyToManyField(User, related_name="get_followed_profiles")
-
-
-
-
     def __str__(self):
         return self.user.username
 
@@ -34,20 +20,13 @@ class Profile(models.Model):
 class Post(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user = models.CharField(max_length=100)
-    # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     image = models.ImageField(upload_to='post_images')
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True,)
     ingredients = models.TextField(blank=True)
     instructions = models.TextField(blank=True)
     created_at = models.DateTimeField(default=datetime.now)
     likes = models.IntegerField(default=0)
-    #comments =
 
-    # Relationships
-
-
-
-   
     def __str__(self):
         return self.user
 
@@ -60,10 +39,20 @@ class LikePost(models.Model):
         return self.username
 
 
-
 class FollowersCount(models.Model):
     follower = models.CharField(max_length=100)
     user = models.CharField(max_length=100)
 
     def __str__(self):
         return self.user
+
+class Comments(models.Model):
+    post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    body = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.username
+
+    

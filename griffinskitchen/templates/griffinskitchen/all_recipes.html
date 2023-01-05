@@ -54,6 +54,8 @@
         <textarea  name="ingredients" placeholder="Ingredients..." ></textarea>
         <textarea  name="instructions" placeholder="Instructions..." ></textarea>
         <br>
+        
+    
         <button class="button bg-blue-700" type="submit" >Post</button>
     </div>
 </form>
@@ -74,8 +76,9 @@
 </p>
 <p>
     <strong>Instructions</strong> {{post.instructions}}
-</p>
 
+</p>
+{% endfor %}
 <br>
 <div>
     <a href="/like_post?post_id={{post.id}}">
@@ -94,11 +97,8 @@
             {% endif %}
         </div>          
 </div>
-  <br>
-  <br>
-  <hr>
 
- {% endfor %}
+
 
                     <!-- right sidebar-->
                     <div class="lg:w-5/12">
@@ -129,8 +129,8 @@
                                 {% endfor %}
 
                             </div>
-{% endblock %}
 
+{% endblock %}
 
 
 
