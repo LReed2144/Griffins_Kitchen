@@ -19,10 +19,6 @@ def index(request):
  
 
 @login_required
-def home_page(request):
-    return render(request, "griffinskitchen/home_page.html")
-
-@login_required
 def all_recipes(request,):
     #get object of current login user
     user_object = User.objects.get(username=request.user.username)
@@ -136,7 +132,7 @@ def profile(request, pk):
         'user_followers': user_followers,
         'user_following': user_following,
     }
-    return render(request, 'griffinskitchen/home_page.html', context)
+    return render(request, 'griffinskitchen/index.html', context)
     
 
 
