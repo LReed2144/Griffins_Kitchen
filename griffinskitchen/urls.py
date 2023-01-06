@@ -14,6 +14,4 @@ urlpatterns = [
     path("like_post", views.like_post, name="like_post"),
     path('profile/<str:pk>', views.profile, name='profile'),
     path('search', views.search, name="search")
-    # path('post_delete/<post_id>', views.post_delete, name="post_delete")
-    # path('all_recipes/comment', AddCommentView.as_view(), name="add_comment")
 ]

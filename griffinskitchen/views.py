@@ -14,6 +14,7 @@ from .models import Profile, Post, User, LikePost, FollowersCount, Comments
 
 
 
+
 def index(request):
     return render(request, "griffinskitchen/index.html")
  
@@ -221,7 +222,7 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("home_page"))
+            return HttpResponseRedirect(reverse("index"))
         else:
             return render(request, "griffinskitchen/login.html", {
                 "message": "Invalid username and/or password."
@@ -232,7 +233,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("login"))
 
 
 def register(request):
@@ -264,6 +265,6 @@ def register(request):
                 "message": "Username already taken."
             })
         login(request, user)
-        return HttpResponseRedirect(reverse("home_page"))
+        return HttpResponseRedirect(reverse("all_recipes"))
     else:
         return render(request, "griffinskitchen/register.html")

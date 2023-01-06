@@ -4,132 +4,111 @@
 
 {% block script %}
     <script src="{% static 'griffinskitchen/index.js' %}"></script>
+    <script src="{% static 'griffinskitchen/styles.css' %}"></script>
 {% endblock %}
 
 {% block body %}
-<header>
-    <div class="header_inner">
-        <form action="/search" method="POST">
+    <form action="/search" method="POST">
         {% csrf_token %}
-        <div class="left-side">
-            <!-- Logo -->
-            <!-- <div id="logo" class=" uk-hidden@s">
-                <a href="home.html">
-                    <b><h1 style="text-transform: uppercase;">Social Book</h1></b>
-                </a>
-            </div> -->
-
-            <!--<div class="triger" uk-toggle="target: #wrapper ; cls: sidebar-active">
-                <i class="uil-bars"></i>
-            </div>-->
-
-            <!-- <div class="header_search"> -->
-                <input type="text" name="username" placeholder="Search for username..">&nbsp; &nbsp;
-                <button type="submit"><i class="fa fa-search fa-1x"></i></button>
-            <!-- </div> -->
-
+        <div class="float-right d-flex p-2" style="background-color: #e4e2e0;">
+            <input type="text" name="username" placeholder="Search for username..">&nbsp; &nbsp;
+            <button type="submit"><i class="fa fa-search fa-1x"></i></button>
         </div>
-        
-
-<h1>welcome to the all recipes posts!</h1>
-
-<form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-<a href="{% url 'index' %}">
-    <div class="col-span-2">
-        <label for=""> Profile Image</label>
-        <img width="100" height="100" src="{{user_profile.profile_img.url}}" />
-    </div>
-</a>
-</form>
-<form action="upload" method="POST" enctype="multipart/form-data" >
-    {% csrf_token %}
-    <p> Post Here
-    </p>
-
-    <div>
-        <input type="file" name="image_upload">
-        
-        <textarea  name="description" placeholder="Description..." ></textarea>
-        <textarea  name="ingredients" placeholder="Ingredients..." ></textarea>
-        <textarea  name="instructions" placeholder="Instructions..." ></textarea>
-        <br>
-        
-    
-        <button class="button bg-blue-700" type="submit" >Post</button>
-    </div>
-</form>
-
-
-{% for post in posts %}
-<span class="block font-semibold "><a href="/profile/{{post.user}}">@{{post.user}}</a></span>
-<div uk-lightbox>
-    <a href="{{post.image.url}}">  
-        <img src="{{post.image.url}}" alt="">
+    </form>  
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+    <a href="{% url 'settings' %}">
+        <div class="col-span-2 pl-5 pt-2">
+            <img width="100" height="100" src="{{user_profile.profile_img.url}}" class="rounded-circle" /><br>
+            <label for="">{{ user_profile }}'s Profile</label>
+        </div>
     </a>
-</div>
-<p>
-    <strong>Description</strong> {{post.description}}
-</p>
-<p>
-    <strong>Ingredients</strong> {{post.ingredients}}
-</p>
-<p>
-    <strong>Instructions</strong> {{post.instructions}}
+    </form>
 
-</p>
-{% endfor %}
-<br>
-<div>
-    <a href="/like_post?post_id={{post.id}}">
-        <button class="button button-like">
-            <i class="fa fa-heart"></i>
-            <span>Like</span>
-        </button>
-    </a>
-        <div>
-            {% if post.likes == 0 %}
-            <p></p>
-            {% elif post.likes == 1 %}
-            <p>Liked by {{post.likes}} person</p>
-            {% else %}
-            <p>Liked by {{post.likes}} people</p>
-            {% endif %}
-        </div>          
-</div>
-
-
-
-                    <!-- right sidebar-->
-                    <div class="lg:w-5/12">
-
-                        <div class="bg-white  shadow-md rounded-md overflow-hidden">
-
-                            <div class="bg-gray-50  border-b border-gray-100 flex items-baseline justify-between py-4 px-6 ">
-                                <h2 class="font-semibold text-lg">Users You Can Follow</h2>
-                                <!-- <a href="#"> Refresh</a> -->
-                            </div>
-                           
-                            <div class="divide-gray-300 divide-gray-50 divide-opacity-50 divide-y px-4 ">
-
-                                {% for suggestion in suggestions_username_profile_list %}
-                                <div class="flex items-center justify-between py-3">
-                                    <div class="flex flex-1 items-center space-x-4">
-                                        <a href="/profile/{{suggestion.user}}">
-                                            <img src="{{suggestion.profile_img.url}}" class="bg-gray-200 rounded-full w-10 h-10">
-                                        </a>
-                                        <div class="flex flex-col">
-                                            <span class="block capitalize font-semibold"> {{suggestion.user}} </span>
-                                            <span class="block capitalize text-sm"> {{suggestion.about}} </span>
-                                        </div>
-                                    </div>
-                                    
-                                    <a href="/profile/{{suggestion.user}}" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 "> View User </a>
+    <!-- right sidebar-->
+    <div class="card float-right" style="width: 18rem; background-color: #76b5c5;">
+        <div class="bg-white  shadow-md rounded-md overflow-hidden">
+            <div class="bg-gray-50  border-b border-gray-100 flex items-baseline justify-between py-4 px-6 ">
+                <h3 class="font-semibold text-lg pl-2">Users You Can Follow</h3>
+            </div>
+            <div class="divide-gray-300 divide-gray-50 divide-opacity-50 divide-y px-4 ">
+                {% for suggestion in suggestions_username_profile_list %}
+                <div class="flex items-center justify-between py-3">
+                    <div class="flex flex-1 items-center space-x-4">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <a href="/profile/{{suggestion.user}}">
+                                    <img width="100" height="100" src="{{suggestion.profile_img.url}}" class="rounded-circle">
+                                </a>
+                                <div class="flex flex-col">
+                                    <span class="block capitalize font-semibold"> {{suggestion.user}} </span><br>
+                                    <span class="block capitalize text-sm"> {{suggestion.about}} </span>
                                 </div>
-                                {% endfor %}
+                            </li>
+                        </ul>
+                    </div>
+                        <a href="/profile/{{suggestion.user}}" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 "> View User </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
-                            </div>
+    <div class="float-left d-flex p-5" style="background-color: white;">
+        <div class="pb-5" style="background-color: #76b5c5;;">
+            <div class="p-2">
+                <h2>All Recipes!</h2><br>
+                    <form action="upload" method="POST" enctype="multipart/form-data" >
+                        {% csrf_token %}
+                        <p> Share your recipe here</p>
+                        <div>
+                            <input type="file" name="image_upload">
+                            <br>
+                            <br>
+                            <textarea  name="description" placeholder="Description..." ></textarea><br>
+                            <textarea  name="ingredients" placeholder="Ingredients..." ></textarea><br>
+                            <textarea  name="instructions" placeholder="Instructions..." ></textarea><br>
+                            <button class="button bg-blue-700" type="submit" >Post</button>
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
 
+    <div class="card m-5" style="width: 55rem; background-color: #76b5c5;">
+        <div class="bg-white shadow-md rounded-md overflow-hidden">
+            <div class="bg-gray-50  border-b border-gray-100 flex items-baseline justify-between py-4 px-6 ">
+                <div class="p-5"><em><hr/></em>     
+                    {% for post in posts %}
+                        <span class="block font-semibold "><a href="/profile/{{post.user}}">@{{post.user}}</a></span>
+                        <div uk-lightbox>
+                            <a href="{{post.image.url}}">  
+                                <img width="200" height="auto" src="{{post.image.url}}" alt="">
+                            </a>
+                            <p><strong>Description</strong> {{post.description}}</p>
+                            <p><strong>Ingredients</strong> {{post.ingredients}}</p>
+                            <p><strong>Instructions</strong> {{post.instructions}}</p><br>   
+                            <a href="/like_post?post_id={{post.id}}">
+                                <button class="button button-like">
+                                    <i class="fa fa-heart"></i>
+                                    <span>Like</span>
+                                </button>
+                            </a>
+                            {% if post.likes == 0 %}
+                                <p></p>
+                                {% elif post.likes == 1 %}
+                                <p>Liked by {{post.likes}} person</p>
+                                {% else %}
+                                <p>Liked by {{post.likes}} people</p>
+                            {% endif %}<em><hr/></em>
+                        </div>  
+                    {% endfor %}         
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 
