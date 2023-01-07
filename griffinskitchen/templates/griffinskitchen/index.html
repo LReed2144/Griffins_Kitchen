@@ -5,7 +5,8 @@
 
 
 {% block body %}
-
+<form action="/follow" method="POST">
+    {% csrf_token %}
     <div class="d-flex justify-content-center">
         {% if user_object.username == user.username %}
             <h1>Welcome, {{user.username}}!</h1>
@@ -45,8 +46,6 @@
         {{user_profile.about}}
     </div>
     <div class="col-span-2 pl-5 pt-2"> 
-        <form action="/follow" method="POST">
-            {% csrf_token %}
             <div class="add-btn"> 
             {% if user_post_length == 0 %}
             <span style="color: black; font-size: 20px;"><b>No Post</b></span>
@@ -87,4 +86,5 @@
         <hr>
         <br>
         {% endfor %}
+        </form>
 {% endblock %}

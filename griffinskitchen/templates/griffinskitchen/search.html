@@ -5,11 +5,6 @@
 
 {% block body %}
 
-<h1>test</h1>
-<!-- <input type="text" name="username" placeholder="Search for username..">&nbsp; &nbsp;
-<button type="submit"><i class="fa fa-search fa-1x"></i></button> -->
-
-
     <form action="search" method="POST">
     {% csrf_token %}
         <div class="container">
@@ -24,7 +19,7 @@
                 
                 {% for users in username_profile_list %}
                 <section class="search-result-item">
-                    <a class="image-link" href="/profile/{{users.user}}"><img class="image" src="{{users.profile_img.url}}">
+                    <a class="image-link" href="/profile/{{users.user}}"><img width="200" height="auto" src="{{users.profile_img.url}}">
                     </a>
                     <div class="search-result-item-body">
                         <div class="row">
