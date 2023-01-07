@@ -2,10 +2,7 @@
 {% load static %}
 
 
-{% block script %}
-    <script src="{% static 'griffinskitchen/index.js' %}"></script>
-    <script src="{% static 'griffinskitchen/styles.css' %}"></script>
-{% endblock %}
+
 
 {% block body %}
     <form action="/search" method="POST">
@@ -109,7 +106,18 @@
             </div>
         </div>
     </div>
+    <div id="pages" class ="row justify-content-center" >
+        <nav aria-label="Page navigation example">
+        <ul id="pagination" class="pagination">
+        </ul>
+        </nav>    
+    </div>
+    <div id="posts"></div>
 {% endblock %}
 
 
 
+{% block script %}
+    <script src="{% static 'griffinskitchen/index.js' %}"></script>
+    <script src="{% static 'griffinskitchen/styles.css' %}"></script>
+{% endblock %}

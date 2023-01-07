@@ -8,6 +8,8 @@ from django.contrib.auth.models import User, auth
 from itertools import chain
 import random
 from django.views.generic.edit import CreateView
+import json
+from django.core.paginator import Paginator
 
 from .models import Profile, Post, User, LikePost, FollowersCount, Comments
 
@@ -229,6 +231,16 @@ def login_view(request):
             })
     else:   
         return render(request, "griffinskitchen/login.html")
+
+def paginated_posts(request,posts):
+    posts = posts.order_by("-created_date").all()  
+    paginator = Paginator(posts,10)
+    page_obj = paginator.get_page(request.GET["page"])
+    return JsonResponse({
+        "posts": [post.categories(request.user) for post in page_obj],
+        "num_pages": paginator.num_pages
+        }
+        , safe=False)
 
 
 def logout_view(request):
