@@ -1,0 +1,1 @@
+web: gunicorn Griffins_Kitchen.wsgi
